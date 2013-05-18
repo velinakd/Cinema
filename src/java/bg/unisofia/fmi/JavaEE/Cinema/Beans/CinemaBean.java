@@ -12,7 +12,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import bg.unisofia.fmi.JavaEE.Cinema.Classes.Cinema;
-import javax.persistence.Query;
+import bg.unisofia.fmi.JavaEE.Cinema.Classes.Seat;
+import bg.unisofia.fmi.JavaEE.Cinema.Classes.Theather;
 
 /**
  * Session Bean implementation class CinemaBean
@@ -28,14 +29,35 @@ public class CinemaBean {
 		return em.createNamedQuery("AllCinemas", Cinema.class).getResultList();
 	}
 	
-	public Cinema getCinemaByID(int id) {
-		Query query = em.createQuery("SELECT c FROM Cinema c WHERE c.cinemaID = :id");
-		query.setParameter("id", id);
-		return (Cinema)query.getSingleResult();
+	public Cinema getCinemaByID(long id) {
+		return em.find(Cinema.class, id);
 	}
 
 	public void addCinema(Cinema cinema) {
 		em.persist(cinema);
 		em.flush();
 	}
+        
+        public void removeCinema(Cinema cinema) {
+                for (Theather t : cinema.getTheatherList())
+                {
+                    for (Seat s : t.getSeatList())
+                        em.remove(s);
+                    em.remove(t);
+                }
+                em.remove(cinema);
+                em.flush();
+        }
+
+        public void removeCinemaByID(long removalID) {
+                Cinema cinema = getCinemaByID(removalID);
+                for (Theather t : cinema.getTheatherList())
+                {
+                    for (Seat s : t.getSeatList())
+                        em.remove(s);
+                    em.remove(t);
+                }
+                em.remove(cinema);
+                em.flush();
+        }
 }

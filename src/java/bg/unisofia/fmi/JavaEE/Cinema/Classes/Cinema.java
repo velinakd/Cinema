@@ -1,10 +1,11 @@
 package bg.unisofia.fmi.JavaEE.Cinema.Classes;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Basic;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -18,7 +19,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "T_CINEMA")
 @NamedQuery(name = "AllCinemas", query = "select c from Cinema c")
-public class Cinema {
+public class Cinema implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long cinemaID;
@@ -30,13 +31,8 @@ public class Cinema {
     private String cinemaPhone;
     @Basic
     private String cinemaEMail;
-    @OneToMany
+    @OneToMany(mappedBy = "cinema", fetch=FetchType.EAGER)
     private List<Theather> theatherList;
-    
-    public Cinema()
-    {
-    	theatherList = new ArrayList<Theather>();
-    }
 
     public long getCinemaID() {
         return cinemaID;
@@ -73,13 +69,15 @@ public class Cinema {
 	public void setCinemaEMail(String cinemaEMail) {
 		this.cinemaEMail = cinemaEMail;
 	}
-
 	public List<Theather> getTheatherList() {
-		return theatherList;
+            return theatherList;
 	}
+        public void setTheatherList(List<Theather> theatherList) {
+            this.theatherList = theatherList;
+        }
+        public void addTheather(Theather theather)
+        {
+            this.theatherList.add(theather);
+        }
 
-	public void setTheatherList(List<Theather> theatherList) {
-		this.theatherList = theatherList;
-	}
-    
 }
