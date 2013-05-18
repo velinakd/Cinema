@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package bg.unisofia.fmi.JavaEE.Cinema.Beans;
 
 import java.util.List;
@@ -50,14 +46,6 @@ public class CinemaBean {
         }
 
         public void removeCinemaByID(long removalID) {
-                Cinema cinema = getCinemaByID(removalID);
-                for (Theather t : cinema.getTheatherList())
-                {
-                    for (Seat s : t.getSeatList())
-                        em.remove(s);
-                    em.remove(t);
-                }
-                em.remove(cinema);
-                em.flush();
+                removeCinema(getCinemaByID(removalID));
         }
 }

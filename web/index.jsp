@@ -18,5 +18,11 @@
         <a href="./admin/TheatherServlet">Theather Servlet</a>
         <br>
         <a href="./admin/SeatServlet">Seat Servlet</a>
+        <br>
+        <a href="./admin/MovieServlet">Movie Servlet</a>
+        <br>
+        <a href="./admin/ScreeningServlet">Screening Servlet</a>
+        <br>
+        <a href="./admin/ScreeningSeatServlet">Reserved Seats Servlet</a>
     </body>
 </html>

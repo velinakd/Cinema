@@ -47,14 +47,6 @@ public class TheatherBean {
         }
 
         public void removeTheatherByID(long removalID) {
-                Theather theather = getTheatherByID(removalID);
-                for (Seat s : theather.getSeatList())
-                    em.remove(s);
-                List<Theather> theatherList = theather.getCinema().getTheatherList();
-                theatherList.remove(theather);
-                theather.getCinema().setTheatherList(theatherList);
-                em.flush();
-                em.remove(theather);
-                em.flush();
+                removeTheather(getTheatherByID(removalID));
         }
 }

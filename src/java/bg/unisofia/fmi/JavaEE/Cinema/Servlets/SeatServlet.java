@@ -2,7 +2,6 @@ package bg.unisofia.fmi.JavaEE.Cinema.Servlets;
 
 import bg.unisofia.fmi.JavaEE.Cinema.Beans.SeatBean;
 import bg.unisofia.fmi.JavaEE.Cinema.Beans.TheatherBean;
-import bg.unisofia.fmi.JavaEE.Cinema.Classes.Cinema;
 import bg.unisofia.fmi.JavaEE.Cinema.Classes.Seat;
 import bg.unisofia.fmi.JavaEE.Cinema.Classes.Theather;
 import java.io.IOException;
@@ -109,17 +108,20 @@ public class SeatServlet extends HttpServlet {
                 if (theatherIDString != null
 				&& !theatherIDString.trim().isEmpty()) {       
                 Theather theather = theatherBean.getTheatherByID(Long.parseLong(theatherIDString));
-                for (int i=1; i<= theather.getRowCount(); i++)
-                    for (int j=1; j<= theather.getSeatCount(); j++)
-                    {
-                        Seat seat = new Seat();
-                        seat.setTheather(theather);
-                        seat.setSeatStatus("Available");
-                        seat.setSeatRow(i);
-                        seat.setSeatNumber(j);
-                        seat.setSeatRelativeNumber((i-1)*(int)theather.getSeatCount()+j);
-                        seatBean.addSeat(seat);
-                    }
+                if (!theather.getSeatList().isEmpty()) { }
+                else {
+                    for (int i=1; i<= theather.getRowCount(); i++)
+                        for (int j=1; j<= theather.getSeatCount(); j++)
+                        {
+                            Seat seat = new Seat();
+                            seat.setTheather(theather);
+                            seat.setSeatStatus("Available");
+                            seat.setSeatRow(i);
+                            seat.setSeatNumber(j);
+                            seat.setSeatRelativeNumber((i-1)*(int)theather.getSeatCount()+j);
+                            seatBean.addSeat(seat);
+                        }
+                }
             }
 	}
         

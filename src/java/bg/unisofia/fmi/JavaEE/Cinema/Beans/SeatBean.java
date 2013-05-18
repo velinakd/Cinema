@@ -1,8 +1,6 @@
 package bg.unisofia.fmi.JavaEE.Cinema.Beans;
 
 import bg.unisofia.fmi.JavaEE.Cinema.Classes.Seat;
-import bg.unisofia.fmi.JavaEE.Cinema.Classes.Theather;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -10,7 +8,6 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import javax.persistence.Query;
 
 /**
  * Session Bean implementation class SeatBean

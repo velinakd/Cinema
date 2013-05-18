@@ -5,15 +5,11 @@
 package bg.unisofia.fmi.JavaEE.Cinema.Servlets;
 
 import bg.unisofia.fmi.JavaEE.Cinema.Beans.CinemaBean;
-import bg.unisofia.fmi.JavaEE.Cinema.Beans.SeatBean;
 import bg.unisofia.fmi.JavaEE.Cinema.Beans.TheatherBean;
 import bg.unisofia.fmi.JavaEE.Cinema.Classes.Cinema;
-import bg.unisofia.fmi.JavaEE.Cinema.Classes.Seat;
 import bg.unisofia.fmi.JavaEE.Cinema.Classes.Theather;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -21,10 +17,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author ss
- */
 public class TheatherServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
