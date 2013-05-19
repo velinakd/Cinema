@@ -35,6 +35,9 @@ public class Theather implements Serializable {
         
         @OneToMany(mappedBy = "theather", fetch=FetchType.EAGER)
         private List<Seat> seatList;
+        
+        @OneToMany(mappedBy = "screeningTheather", fetch=FetchType.EAGER)
+        private List<Screening> screeningList;
 	
 	public long getTheatherID() {
 		return theatherID;
@@ -79,5 +82,16 @@ public class Theather implements Serializable {
         public void addSeat(Seat seat)
         {
             this.seatList.add(seat);
+        }
+        public List<Screening> getScreeningList() {
+            return screeningList;
+        }
+
+        public void setScreeningList(List<Screening> screeningList) {
+            this.screeningList = screeningList;
+        }
+        public void addScreening(Screening screening)
+        {
+            this.screeningList.add(screening);
         }
 }

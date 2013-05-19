@@ -8,8 +8,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import bg.unisofia.fmi.JavaEE.Cinema.Classes.Cinema;
-import bg.unisofia.fmi.JavaEE.Cinema.Classes.Seat;
 import bg.unisofia.fmi.JavaEE.Cinema.Classes.Theather;
+import javax.ejb.EJB;
 
 /**
  * Session Bean implementation class CinemaBean
@@ -20,6 +20,9 @@ public class CinemaBean {
 
 	@PersistenceContext
 	private EntityManager em;
+        
+        @EJB
+        TheatherBean theatherBean;
 
 	public List<Cinema> getAllCinemas() {
 		return em.createNamedQuery("AllCinemas", Cinema.class).getResultList();
@@ -37,9 +40,7 @@ public class CinemaBean {
         public void removeCinema(Cinema cinema) {
                 for (Theather t : cinema.getTheatherList())
                 {
-                    for (Seat s : t.getSeatList())
-                        em.remove(s);
-                    em.remove(t);
+                    theatherBean.removeForCinema(t);
                 }
                 em.remove(cinema);
                 em.flush();

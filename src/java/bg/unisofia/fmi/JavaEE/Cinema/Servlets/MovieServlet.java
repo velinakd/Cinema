@@ -51,17 +51,17 @@ public class MovieServlet extends HttpServlet {
 			throws SQLException, IOException {
 		List<Movie> resultList = movieBean.getAllMovies();
 		response.getWriter().println(
-				"<p><table border=\"1\"><tr><th colspan=\"7\">"
+				"<p><table border=\"1\"><tr><th colspan=\"8\">"
 						+ (resultList.isEmpty() ? "0 " : resultList.size()
 								+ " ")
 								+ "Movies in the Database</th></tr>");
 		if (resultList.isEmpty()) {
 			response.getWriter().println(
-					"<tr><td colspan=\"7\">Database is empty</td></tr>");
+					"<tr><td colspan=\"8\">Database is empty</td></tr>");
 		} else {
 			response.getWriter()
 			.println(
-					"<tr><th>Movie ID</th><th>Movie Name</th><th>Year</th><th>Movie length</th><th>Age group</th><th>Poster</th><th>Plot</th></tr>");
+					"<tr><th>Movie ID</th><th>Movie Name</th><th>Year</th><th>Movie length</th><th>Age group</th><th>Poster</th><th>Plot</th><th>Screenings</th></tr>");
 		}
 		for (Movie m : resultList) {
 			response.getWriter().println(
@@ -79,6 +79,8 @@ public class MovieServlet extends HttpServlet {
                                         + m.getMoviePoster()
                                         + "</td><td>"
                                         + m.getMoviePlot()
+                                        + "</td><td>"
+                                        + m.getMovieScreenings().size()
 					+ "</td></tr>");
 		}
 		response.getWriter().println("</table></p>");
@@ -102,7 +104,7 @@ public class MovieServlet extends HttpServlet {
 			IOException, SQLException {
                 String movieName = request.getParameter("MovieName");
                 String movieYear = request.getParameter("MovieYear");
-                String movieLength = request.getParameter("MovieYear");
+                String movieLength = request.getParameter("MovieLength");
                 String ageGroup = request.getParameter("AgeGroup");
                 String moviePoster = request.getParameter("MoviePoster");
                 String moviePlot = request.getParameter("MoviePlot");

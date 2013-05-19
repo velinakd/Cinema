@@ -107,22 +107,9 @@ public class SeatServlet extends HttpServlet {
                 String theatherIDString = request.getParameter("TheatherID");
                 if (theatherIDString != null
 				&& !theatherIDString.trim().isEmpty()) {       
-                Theather theather = theatherBean.getTheatherByID(Long.parseLong(theatherIDString));
-                if (!theather.getSeatList().isEmpty()) { }
-                else {
-                    for (int i=1; i<= theather.getRowCount(); i++)
-                        for (int j=1; j<= theather.getSeatCount(); j++)
-                        {
-                            Seat seat = new Seat();
-                            seat.setTheather(theather);
-                            seat.setSeatStatus("Available");
-                            seat.setSeatRow(i);
-                            seat.setSeatNumber(j);
-                            seat.setSeatRelativeNumber((i-1)*(int)theather.getSeatCount()+j);
-                            seatBean.addSeat(seat);
-                        }
+                    Theather theather = theatherBean.getTheatherByID(Long.parseLong(theatherIDString));
+                    seatBean.addSeatsForTheather(theather);
                 }
-            }
 	}
         
         private void appendSeatRemoveForm(HttpServletResponse response) throws IOException {

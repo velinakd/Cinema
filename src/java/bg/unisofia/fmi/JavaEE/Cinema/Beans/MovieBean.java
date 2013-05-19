@@ -37,9 +37,11 @@ public class MovieBean {
         public void removeMovie(Movie movie) {
                 for (Screening s : movie.getMovieScreenings())
                 {
-                    for (ScreeningSeat x : s.getScreeningSeatList())
-                        em.remove(x);
-                    s.setScreeningTheather(null);
+                    for (ScreeningSeat ss : s.getScreeningSeatList())
+                        em.remove(ss);
+                    List<Screening> theatherScreeningList = s.getScreeningTheather().getScreeningList();
+                    theatherScreeningList.remove(s);
+                    s.getScreeningTheather().setScreeningList(theatherScreeningList);
                     em.remove(s);
                 }
                 em.flush();

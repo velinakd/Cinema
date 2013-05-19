@@ -59,20 +59,19 @@ public class TheatherServlet extends HttpServlet {
 
 	private void appendTheatherTable(HttpServletResponse response)
 			throws SQLException, IOException {
-		// Append table that lists all theathers
 		List<Theather> resultList = theatherBean.getAllTheathers();
 		response.getWriter().println(
-				"<p><table border=\"1\"><tr><th colspan=\"6\">"
+				"<p><table border=\"1\"><tr><th colspan=\"7\">"
 						+ (resultList.isEmpty() ? "0 " : resultList.size()
 								+ " ")
 								+ "Theathers in the Database</th></tr>");
 		if (resultList.isEmpty()) {
 			response.getWriter().println(
-					"<tr><td colspan=\"6\">Database is empty</td></tr>");
+					"<tr><td colspan=\"7\">Database is empty</td></tr>");
 		} else {
 			response.getWriter()
 			.println(
-					"<tr><th>Theather ID</th><th>Theather Number</th><th>Rows</th><th>Seats on a row</th><th>Cinema name</th><th>Total Seats</th></tr>");
+					"<tr><th>Theather ID</th><th>Theather Number</th><th>Rows</th><th>Seats on a row</th><th>Cinema name</th><th>Total Seats</th><th>Screenings</th></tr>");
 		}
 		for (Theather t : resultList) {
 			response.getWriter().println(
@@ -88,13 +87,14 @@ public class TheatherServlet extends HttpServlet {
                                         + t.getCinema().getCinemaName()
                                         + "</td><td>"
                                         + t.getSeatList().size()
+                                        + "</td><td>"
+                                        + t.getScreeningList().size()
                                         + "</td></tr>");
 		}
 		response.getWriter().println("</table></p>");
 	}
 
         private void appendTheatherAddForm(HttpServletResponse response) throws IOException {
-                // Append form through which new theathers can be added
                 response.getWriter()
                                 .println(
                                                 "<p><form action=\"\" method=\"post\">"
@@ -108,7 +108,6 @@ public class TheatherServlet extends HttpServlet {
 
         private void doTheatherAdd(HttpServletRequest request) throws ServletException,
                         IOException, SQLException {
-                // Extract name of theather to be added from request
                 String theatherNumber = request.getParameter("TheatherNumber");
                 String rowCount = request.getParameter("RowCount");
                 String seatCount = request.getParameter("SeatCount");
@@ -138,7 +137,6 @@ public class TheatherServlet extends HttpServlet {
         }
         
         private void appendTheatherRemoveForm(HttpServletResponse response) throws IOException {
-        // Append form through which new cinemas can be added
         response.getWriter()
                         .println(
                                     "<p><form action=\"\" method=\"post\">"
@@ -148,7 +146,6 @@ public class TheatherServlet extends HttpServlet {
 	}
 	private void doTheatherRemove(HttpServletRequest request) throws ServletException,
 			IOException, SQLException {
-		// Extract name of cinema to be added from request
 		String theatherRemovalID = request.getParameter("RemoveTheatherID");
 
 		if (theatherRemovalID != null

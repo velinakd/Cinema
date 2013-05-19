@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-public class ScreeningSeatServlet extends HttpServlet {
+public class CashierReservationServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
@@ -29,9 +29,9 @@ public class ScreeningSeatServlet extends HttpServlet {
 		response.getWriter().println("<h1>Screening Seat Servlet</h1>");
 		try {
 			appendScreeningSeatTable(response);
-                        appendScreeningSeatAddForm(response);
                         appendReservationForm(response);
                         appendReservationRemoveForm(response);
+                        appendSellingForm(response);
 		} catch (Exception e) {
 			response.getWriter().println(
 					"Persistence operation failed in GET with reason: "
@@ -44,9 +44,9 @@ public class ScreeningSeatServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		try {
-                        doScreeningSeatAdd(request);
 			doReservationAdd(request);
                         doReservationRemove(request);
+                        doSale(request);
 			doGet(request, response);
 		} catch (Exception e) {
 			response.getWriter().println(
@@ -62,7 +62,7 @@ public class ScreeningSeatServlet extends HttpServlet {
 				"<p><table border=\"1\"><tr><th colspan=\"7\">"
 						+ (resultList.isEmpty() ? "0 " : resultList.size()
 								+ " ")
-								+ "Screening seats in the Database</th></tr>");
+								+ "Seats in the Database</th></tr>");
 		if (resultList.isEmpty()) {
 			response.getWriter().println(
 					"<tr><td colspan=\"7\">Database is empty</td></tr>");
@@ -91,27 +91,6 @@ public class ScreeningSeatServlet extends HttpServlet {
 		}
 		response.getWriter().println("</table></p>");
 	}
-        
-        private void appendScreeningSeatAddForm(HttpServletResponse response) throws IOException {
-		response.getWriter()
-				.println(
-                                            "<p><form action=\"\" method=\"post\">"
-                                                            + "<br>Screening ID:&nbsp;<input type=\"text\" name=\"ScreeningIDAdd\">"
-                                                            + "<br>&nbsp;<input type=\"submit\" value=\"Add screening seats\">"
-                                                            + "</form></p>");
-	}
-        
-        private void doScreeningSeatAdd(HttpServletRequest request) throws ServletException,
-			IOException, SQLException {
-		String screeningIDAdd = request.getParameter("ScreeningIDAdd");
-		if (screeningIDAdd != null
-				&& !screeningIDAdd.trim().isEmpty()) {
-                Screening screening = screeningBean.getScreeningByID(Long.parseLong(screeningIDAdd));
-                if (!screening.getScreeningSeatList().isEmpty()) { }
-                else
-                    screeningSeatBean.addSeatsForScreening(screening);
-            } 
-        }
         
 	private void appendReservationForm(HttpServletResponse response) throws IOException {
 		response.getWriter()
@@ -144,6 +123,23 @@ public class ScreeningSeatServlet extends HttpServlet {
 		if (reservationRemovalID != null
 				&& !reservationRemovalID.trim().isEmpty()) {
                     screeningSeatBean.removeReservationByID(Long.parseLong(reservationRemovalID));
+		}
+	} 
+        
+        private void appendSellingForm(HttpServletResponse response) throws IOException {
+        response.getWriter()
+                        .println(
+                                    "<p><form action=\"\" method=\"post\">"
+                                                    + "<br>Seat ID:&nbsp;<input type=\"text\" name=\"SaleSeatID\">"
+                                                    + "<br>&nbsp;<input type=\"submit\" value=\"Sell seat\">"
+                                                    + "</form></p>");
+	}
+	private void doSale(HttpServletRequest request) throws ServletException,
+			IOException, SQLException {
+		String saleSeatID = request.getParameter("SaleSeatID");
+		if (saleSeatID != null
+				&& !saleSeatID.trim().isEmpty()) {
+                    screeningSeatBean.sellSeatByID(Long.parseLong(saleSeatID));
 		}
 	} 
 }

@@ -13,6 +13,7 @@
     </head>
     <body>
         <h1>Hello World!</h1>
+        <h2>Administrator</h2>
         <a href="./admin/CinemaServlet">Cinema Servlet</a>
         <br>
         <a href="./admin/TheatherServlet">Theather Servlet</a>
@@ -23,6 +24,10 @@
         <br>
         <a href="./admin/ScreeningServlet">Screening Servlet</a>
         <br>
-        <a href="./admin/ScreeningSeatServlet">Reserved Seats Servlet</a>
+        <a href="./admin/ScreeningSeatServlet">Screening Seats Servlet</a>
+        <br>
+        <h2>Cashier</h2>
+        <a href="./cashier/Reserve">Reservation Servlet</a>
+        <br>
     </body>
 </html>

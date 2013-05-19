@@ -9,7 +9,6 @@ import javax.persistence.PersistenceContext;
 
 import bg.unisofia.fmi.JavaEE.Cinema.Classes.Screening;
 import bg.unisofia.fmi.JavaEE.Cinema.Classes.ScreeningSeat;
-import java.util.Iterator;
 
 /**
  * Session Bean implementation class CinemaBean
@@ -32,15 +31,23 @@ public class ScreeningBean {
 	public void addScreening(Screening screening) {
 		em.persist(screening);
 		em.flush();
+                screening.getScreeningTheather().addScreening(screening);
+                em.merge(screening.getScreeningTheather());
+                screening.getScreeningMovie().addScreening(screening);
+                em.merge(screening.getScreeningMovie());
 	}
         
         public void removeScreening(Screening screening) {
                 for (ScreeningSeat s : screening.getScreeningSeatList())
-                em.remove(s);
+                    em.remove(s);
                 List<Screening> screeningList = screening.getScreeningMovie().getMovieScreenings();
                 screeningList.remove(screening);
                 screening.getScreeningMovie().setMovieScreenings(screeningList);
                 em.flush();
+                List<Screening> screeningListTheather = screening.getScreeningTheather().getScreeningList();
+                screeningListTheather.remove(screening);
+                screening.getScreeningTheather().setScreeningList(screeningListTheather);
+                em.merge(screening.getScreeningTheather());
                 em.remove(screening);
                 em.flush();
         }
